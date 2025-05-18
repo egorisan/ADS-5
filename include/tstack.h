@@ -2,9 +2,12 @@
 #ifndef INCLUDE_TSTACK_H_
 #define INCLUDE_TSTACK_H_
 
-template<typename T, int size>
+#include <stdexcept>
+
+template<typename T, int kSize>
+class TStack {
 private:
-    T data[size];
+    T data[kSize];
     int topIndex;
 
 public:
@@ -15,7 +18,7 @@ public:
     }
 
     bool IsFull() const {
-        return topIndex == size - 1;
+        return topIndex == kSize - 1;
     }
 
     void Push(const T& value) {
