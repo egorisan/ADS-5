@@ -32,23 +32,21 @@ std::string infx2pstfx(const std::string& inf) {
                 continue;
             }
             result += ' ';
-        } 
-        else if (c == '(') {
+        } else if (c == '(') {
             stack.Push(c);
-        } 
-        else if (c == ')') {
+        } else if (c == ')') {
             while (!stack.IsEmpty() && stack.Top() != '(') {
                 result += stack.Pop();
                 result += ' ';
             }
             stack.Pop();
-        } 
-        else {
+        } else {
             if (spaceNeeded) {
                 result += ' ';
                 spaceNeeded = false;
             }
-            while (!stack.IsEmpty() && stack.Top() != '(' && precedence(stack.Top()) >= precedence(c)) {
+            while (!stack.IsEmpty() && stack.Top() != '('
+                   && precedence(stack.Top()) >= precedence(c)) {
                 result += stack.Pop();
                 result += ' ';
             }
@@ -97,8 +95,7 @@ int eval(const std::string& post) {
                 number += post[++i];
             }
             stack.Push(std::stoi(number));
-        } 
-        else {
+        } else {
             int b = stack.Pop();
             int a = stack.Pop();
             stack.Push(applyOp(a, b, c));
