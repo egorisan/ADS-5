@@ -34,34 +34,35 @@ std::string infx2pstfx(const std::string& inf) {
             result += ' ';
         } 
         else if (c == '(') {
-            stack.push(c);
+            stack.Push(c);
         } 
         else if (c == ')') {
-            while (!stack.empty() && stack.top() != '(') {
-                result += stack.pop();
+            while (!stack.IsEmpty() && stack.Top() != '(') {
+                result += stack.Pop();
                 result += ' ';
             }
-            stack.pop();
+            stack.Pop();
         } 
         else {
             if (spaceNeeded) {
                 result += ' ';
                 spaceNeeded = false;
             }
-            while (!stack.empty() && stack.top() != '(' && precedence(stack.top()) >= precedence(c)) {
-                result += stack.pop();
+            while (!stack.IsEmpty() && stack.Top() != '(' && precedence(stack.Top()) >= precedence(c)) {
+                result += stack.Pop();
                 result += ' ';
             }
-            stack.push(c);
+            stack.Push(c);
         }
     }
 
-    while (!stack.empty()) {
-        result += stack.pop();
+    while (!stack.IsEmpty()) {
+        result += stack.Pop();
         if (!result.empty() && result.back() != ' ') {
             result += ' ';
         }
     }
+
     if (!result.empty() && result.back() == ' ') {
         result.pop_back();
     }
@@ -95,14 +96,14 @@ int eval(const std::string& post) {
             while (i + 1 < post.length() && isdigit(post[i + 1])) {
                 number += post[++i];
             }
-            stack.push(std::stoi(number));
+            stack.Push(std::stoi(number));
         } 
         else {
-            int b = stack.pop();
-            int a = stack.pop();
-            stack.push(applyOp(a, b, c));
+            int b = stack.Pop();
+            int a = stack.Pop();
+            stack.Push(applyOp(a, b, c));
         }
     }
 
-    return stack.pop();
+    return stack.Pop();
 }
