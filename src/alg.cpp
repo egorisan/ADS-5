@@ -6,8 +6,8 @@
 
 #include "tstack.h"
 
-static int precedence(char o) {
-  return (o == '+' || o == '-') ? 1 : (o == '*' || o == '/') ? 2 : 0;
+static int precedence(char op) {
+  return (op == '+' || op == '-') ? 1 : (op == '*' || op == '/') ? 2 : 0;
 }
 static inline bool isOp(char c) {
   return c == '+' || c == '-' || c == '*' || c == '/';
@@ -63,7 +63,7 @@ int eval(const std::string& post) {
   while (ss >> token) {
     if (token.size() == 1 && isOp(token[0])) {
       if (st.count() < 2)
-        throw std::runtime_error("incorrect postfix exp");
+        throw std::runtime_error("incorrect postfix expression");
       int rhs = st.top();
       st.pop();
       int lhs = st.top();
@@ -86,12 +86,7 @@ int eval(const std::string& post) {
       st.push(std::stoi(token));
     }
   }
-  if (st.count() != 1) throw std::runtime_error("incorrect postfix exp");
+  if (st.count() != 1) throw std::runtime_error("incorrect postfix expression");
   return st.top();
-}
-
-  }
-  if (stack.count() != 1) throw std::runtime_error("incorrect postfix exp");
-  return stack.top();
 }
 
